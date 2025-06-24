@@ -110,9 +110,6 @@ const Header = ({
             <button onClick={onTodayClick} className="w-full text-left px-3 py-2 bg-purple-100 text-purple-700 text-sm rounded hover:bg-purple-200 transition">
               Today
             </button>
-            <button onClick={onToggleTheme} className="w-full text-left text-lg px-3 py-2 rounded hover:bg-purple-100 transition" title="Toggle Dark Mode">
-              🌗 Dark Mode
-            </button>
             <div className="relative">
               <input
                 type="text"
@@ -137,6 +134,9 @@ const Header = ({
             </button>
             <button onClick={exportAsPDF} className="w-full text-left text-lg px-3 py-2 rounded hover:bg-purple-100 transition" title="Export as PDF">
               📤 Export
+            </button>
+            <button onClick={() => setShowHelp(true)} className="w-full text-left text-lg px-3 py-1 rounded hover:bg-purple-100 transition" title="How to Use">
+            📘 How to Use
             </button>
           </div>
         )}
