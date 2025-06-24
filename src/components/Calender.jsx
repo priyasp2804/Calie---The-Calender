@@ -12,7 +12,7 @@ const Calendar = ({
   focusDate = null,
   pinnedEvents = [],
   onPinEvent,
-  onUnpinEvent
+  onUnpinEvent,
 }) => {
   const [currentDate, setCurrentDate] = useState(dayjs());
   const [events, setEvents] = useState([]);
@@ -58,25 +58,6 @@ const Calendar = ({
     }
   }, [focusDate]);
 
-  let dates = [];
-  if (calendarView === 'month') {
-    const startOfMonth = currentDate.startOf('month');
-    const daysInMonth = currentDate.daysInMonth();
-    const startDay = startOfMonth.day();
-
-    for (let i = 0; i < startDay; i++) dates.push(null);
-    for (let d = 1; d <= daysInMonth; d++) {
-      dates.push(dayjs(currentDate).date(d));
-    }
-  } else if (calendarView === 'week') {
-    const startOfWeek = currentDate.startOf('week');
-    for (let i = 0; i < 7; i++) {
-      dates.push(startOfWeek.add(i, 'day'));
-    }
-  } else if (calendarView === 'day') {
-    dates.push(currentDate);
-  }
-
   const groupEventsByTime = (eventList) => {
     const grouped = {};
     for (const event of eventList) {
@@ -86,16 +67,16 @@ const Calendar = ({
     return grouped;
   };
 
+  const getEventsForDate = (date) => {
+    return [...events, ...userEvents].filter((event) => dayjs(event.date).isSame(date, 'day'));
+  };
+
   const goToPrevious = () => {
-    const amount = 1;
-    const unit = calendarView === 'month' ? 'month' : 'day';
-    setCurrentDate(currentDate.subtract(amount, unit));
+    setCurrentDate(currentDate.subtract(1, calendarView === 'month' ? 'month' : 'day'));
   };
 
   const goToNext = () => {
-    const amount = 1;
-    const unit = calendarView === 'month' ? 'month' : 'day';
-    setCurrentDate(currentDate.add(amount, unit));
+    setCurrentDate(currentDate.add(1, calendarView === 'month' ? 'month' : 'day'));
   };
 
   const getHeaderTitle = () => {
@@ -108,34 +89,81 @@ const Calendar = ({
     return currentDate.format('dddd, MMMM D, YYYY');
   };
 
-  const getEventsForDate = (date) => {
-    return [...events, ...userEvents].filter((event) =>
-      dayjs(event.date).isSame(date, 'day')
-    );
-  };
+  let dates = [];
+  if (calendarView === 'month') {
+    const startOfMonth = currentDate.startOf('month');
+    const daysInMonth = currentDate.daysInMonth();
+    const startDay = startOfMonth.day();
+    for (let i = 0; i < startDay; i++) dates.push(null);
+    for (let d = 1; d <= daysInMonth; d++) {
+      dates.push(dayjs(currentDate).date(d));
+    }
+  } else if (calendarView === 'week') {
+    const startOfWeek = currentDate.startOf('week');
+    for (let i = 0; i < 7; i++) dates.push(startOfWeek.add(i, 'day'));
+  } else if (calendarView === 'day') {
+    dates.push(currentDate);
+  }
 
   return (
     <section className="max-w-5xl mx-auto p-6 bg-white/60 rounded-2xl shadow-xl backdrop-blur-sm border border-pink-100 overflow-auto max-h-[80vh]">
-      {/* Navigation */}
       <div className="flex items-center justify-between mb-6">
         <button onClick={goToPrevious} className="text-pink-500 hover:text-pink-600 text-xl font-bold transition-transform hover:scale-110">◀</button>
-        <h2 className="text-2xl sm:text-3xl font-bold text-purple-600">{getHeaderTitle()}</h2>
+          <div className="flex items-center gap-2 text-purple-600 text-xl sm:text-4xl font-bold relative">
+            {/* Month label */}
+            <span>{currentDate.format('MMMM')}</span>
+
+            {/* Month dropdown trigger */}
+            <select
+              value={currentDate.month()}
+              onChange={(e) =>
+                setCurrentDate(currentDate.month(parseInt(e.target.value)))
+              }
+              className="absolute left-[4.2rem] top-1/2 transform -translate-y-1/2 w-30 h-6 opacity-0 cursor-pointer text-xs"
+              title="Change Month"
+            >
+              {Array.from({ length: 12 }).map((_, idx) => (
+                <option key={idx} value={idx} style={{ fontSize: '17px' }}>
+                  {dayjs().month(idx).format('MMMM')}
+                </option>
+              ))}
+            </select>
+
+            {/* Month dropdown icon */}
+            <span className="text-xs mt-1">🔽</span>
+
+            {/* Year label */}
+            <span>{currentDate.format('YYYY')}</span>
+
+            {/* Year dropdown trigger */}
+            <select
+              value={currentDate.year()}
+              onChange={(e) =>
+                setCurrentDate(currentDate.year(parseInt(e.target.value)))
+              }
+              className="absolute left-[9.5rem] top-1/2 transform -translate-y-1/2 w-17 h-6 opacity-0 cursor-pointer text-xs"
+              title="Change Year"
+            >
+              {Array.from({ length: 201 }, (_, i) => 1900 + i).map((year) => (
+                <option key={year} value={year} style={{ fontSize: '17px' }}>
+                  {year}
+                </option>
+              ))}
+            </select>
+
+            {/* Year dropdown icon */}
+            <span className="text-xs mt-1">🔽</span>
+          </div>
+
         <button onClick={goToNext} className="text-pink-500 hover:text-pink-600 text-xl font-bold transition-transform hover:scale-110">▶</button>
       </div>
 
-      {/* Weekdays */}
       {calendarView !== 'day' && (
         <div className="grid grid-cols-7 gap-2 mb-2 text-center text-sm font-semibold text-blue-500">
           {daysOfWeek.map((day, index) => (
             <div
               key={day}
-              className={`py-2 rounded ${
-                index === 0
-                  ? 'bg-pink-100 text-red-600'
-                  : index === 6
-                  ? 'bg-purple-100 text-red-600'
-                  : ''
-              }`}
+              className={`py-2 rounded ${index === 0 ? 'bg-pink-100 text-red-600' : index === 6 ? 'bg-purple-100 text-red-600' : ''}`}
             >
               {day}
             </div>
@@ -143,7 +171,6 @@ const Calendar = ({
         </div>
       )}
 
-      {/* Date Grid */}
       <div className={`grid ${calendarView === 'day' ? 'grid-cols-1' : 'grid-cols-7'} gap-2`}>
         {dates.map((date, idx) => {
           const isToday = date?.isSame(dayjs(), 'day');
@@ -156,31 +183,20 @@ const Calendar = ({
               key={idx}
               data-date={dateStr}
               ref={isToday ? todayRef : null}
-              className={`min-h-[90px] p-2 rounded-lg transition-all flex flex-col items-start justify-start text-sm
-                bg-white shadow-sm hover:shadow-md
-                ${isToday ? 'border-2 border-pink-400' : ''}
-                ${date.day() === 0 ? 'text-red-500' : ''}
-                ${date.day() === 6 ? 'text-red-500' : ''}
-              `}
+              className={`min-h-[90px] p-2 rounded-lg transition-all flex flex-col items-start justify-start text-sm bg-white shadow-sm hover:shadow-md ${isToday ? 'border-2 border-pink-400' : ''} ${date.day() === 0 ? 'text-red-500' : ''} ${date.day() === 6 ? 'text-red-500' : ''}`}
             >
               <span className="font-semibold mb-1 flex items-center justify-between w-full">
                 {date.date()}
                 <div className="ml-auto flex items-center gap-1">
-                  {/* 📌 Pin icon */}
                   {pinnedEvents.some((p) => dayjs(p.date).isSame(date, 'day')) && (
                     <button
                       className="text-[12px]"
                       title="Unpin all events for this date"
-                      onClick={() => {
-                        pinnedEvents
-                          .filter((p) => dayjs(p.date).isSame(date, 'day'))
-                          .forEach(onUnpinEvent);
-                      }}
+                      onClick={() => pinnedEvents.filter((p) => dayjs(p.date).isSame(date, 'day')).forEach(onUnpinEvent)}
                     >
                       📌
                     </button>
                   )}
-                  {/* 💗 Heart icon */}
                   <button
                     onClick={() => onToggleFavourite(dateStr)}
                     className="text-md hover:scale-110 transition"
@@ -191,36 +207,26 @@ const Calendar = ({
                 </div>
               </span>
 
-              {/* Events */}
               <div className="flex flex-col gap-1 mt-1 w-full">
                 {(() => {
                   const grouped = groupEventsByTime(getEventsForDate(date));
-                  return Object.entries(grouped).map(([time, evts], i) => {
-                    const event = evts[0];
-                    const isPinned = pinnedEvents.some(
-                      (p) => p.title === event.title && p.date === event.date
-                    );
-
-                    return (
-                      <div
-                        key={i}
-                        className={`text-[10px] px-1 py-0.5 rounded-md truncate cursor-pointer ${
-                          evts.length > 1
-                            ? 'bg-red-100 text-red-600'
-                            : 'bg-pink-100 text-pink-700'
-                        }`}
-                        title={`${
-                          evts.length > 1 ? 'Conflict: ' : ''
-                        }${evts.map((e) => e.title).join(', ')} at ${time}`}
-                        draggable
-                        onDragStart={() =>
-                          isPinned ? onUnpinEvent(event) : onPinEvent(event)
-                        }
-                      >
-                        {evts.length > 1 ? `⚠️ ${evts.length} events` : event.title}
-                      </div>
-                    );
-                  });
+                  return Object.entries(grouped).flatMap(([time, evts], i) =>
+                    evts.map((event, j) => {
+                      const isPinned = pinnedEvents.some((p) => p.title === event.title && p.date === event.date);
+                      const isConflict = evts.length > 1;
+                      return (
+                        <div
+                          key={`${i}-${j}`}
+                          className={`text-[10px] px-1 py-0.5 rounded-md truncate cursor-pointer ${isConflict ? 'bg-red-100 text-red-600' : 'bg-pink-100 text-pink-700'}`}
+                          title={`${isConflict ? '⚠️ Conflict • ' : ''}${event.title} at ${time}`}
+                          draggable
+                          onDragStart={() => (isPinned ? onUnpinEvent(event) : onPinEvent(event))}
+                        >
+                          {event.title}
+                        </div>
+                      );
+                    })
+                  );
                 })()}
               </div>
             </div>

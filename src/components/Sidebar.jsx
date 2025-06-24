@@ -20,7 +20,7 @@ const Sidebar = ({
       </div>
 
       {/* 📚 Sidebar Content */}
-      <div className="flex flex-col gap-4 p-6 text-purple-800">
+      <div className="flex flex-col gap-4 p-6 text-purple-800 h-[calc(100vh-64px)] overflow-y-auto">
         <h2 className="text-xl font-bold mb-2">🧭 Menu</h2>
 
         {/* 📅 Calendar View */}

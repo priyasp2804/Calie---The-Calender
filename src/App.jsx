@@ -1,3 +1,4 @@
+// App.js
 import { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
@@ -15,7 +16,8 @@ function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [calendarView, setCalendarView] = useState('month');
   const [theme, setTheme] = useState('pink');
-  const [events, setEvents] = useState([]);
+  const [jsonEvents, setJsonEvents] = useState([]);
+  const [userEvents, setUserEvents] = useState([]);
   const [focusDate, setFocusDate] = useState(null);
   const [pinnedEvents, setPinnedEvents] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -26,7 +28,7 @@ function App() {
   useEffect(() => {
     fetch('/events.json')
       .then((res) => res.json())
-      .then((data) => setEvents(data))
+      .then((data) => setJsonEvents(data))
       .catch((err) => console.error('Failed to load events:', err));
   }, []);
 
@@ -56,7 +58,7 @@ function App() {
   };
 
   const handleAddEvent = (newEvent) => {
-    setEvents((prev) => [...prev, newEvent]);
+    setUserEvents((prev) => [...prev, newEvent]);
     setFocusDate(newEvent.date);
     navigate('/');
   };
@@ -86,7 +88,7 @@ function App() {
       return;
     }
 
-    const allEvents = [...events];
+    const allEvents = [...jsonEvents, ...userEvents];
     const results = allEvents.filter(
       (event) =>
         event.title.toLowerCase().includes(query.toLowerCase()) ||
@@ -135,7 +137,6 @@ function App() {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col relative">
-        {/* Floating Sidebar Button */}
         {!isSidebarOpen && (
           <button
             onClick={() => setIsSidebarOpen(true)}
@@ -158,7 +159,6 @@ function App() {
           searchQuery={searchQuery}
         />
 
-        {/* 🔍 Search Results Panel */}
         {searchResults.length > 0 && (
           <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-40 bg-white border border-purple-200 rounded shadow-md w-[90%] max-w-xl p-4">
             <h3 className="font-bold text-purple-600 mb-2 text-left">🔍 Search Results:</h3>
@@ -179,7 +179,6 @@ function App() {
           </div>
         )}
 
-        {/* Page Content */}
         <main className="pt-24 p-6 text-center">
           <Routes>
             <Route
@@ -196,7 +195,8 @@ function App() {
                     favouriteDates={favouriteDates}
                     onToggleFavourite={handleToggleFavourite}
                     calendarView={calendarView}
-                    userEvents={events}
+                    jsonEvents={jsonEvents}
+                    userEvents={userEvents}
                     focusDate={focusDate}
                     pinnedEvents={pinnedEvents}
                     onPinEvent={handlePinEvent}
@@ -214,14 +214,8 @@ function App() {
                 />
               }
             />
-            <Route
-              path="/myevents"
-              element={<MyEventsPage userEvents={events} />}
-            />
-            <Route
-              path="/add-event"
-              element={<AddEventPage onAddEvent={handleAddEvent} />}
-            />
+            <Route path="/myevents" element={<MyEventsPage userEvents={userEvents} />} />
+            <Route path="/add-event" element={<AddEventPage onAddEvent={handleAddEvent} />} />
           </Routes>
         </main>
       </div>
