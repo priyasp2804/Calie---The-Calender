@@ -1,4 +1,3 @@
-// App.js
 import { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
@@ -118,7 +117,6 @@ function App() {
           : 'bg-gradient-to-b from-pink-50 to-purple-50'
       }`}
     >
-      {/* Sidebar */}
       {isSidebarOpen && (
         <div className="w-64 shrink-0">
           <Sidebar
@@ -134,8 +132,7 @@ function App() {
           />
         </div>
       )}
-
-      {/* Main Content */}
+      
       <div className="flex-1 flex flex-col relative">
         {!isSidebarOpen && (
           <button
@@ -149,9 +146,6 @@ function App() {
 
         <Header
           onTodayClick={handleTodayClick}
-          onToggleTheme={() =>
-            document.documentElement.classList.toggle('dark')
-          }
           onShowFavourites={handleShowFavourites}
           onLogoClick={handleLogoClick}
           isSidebarOpen={isSidebarOpen}

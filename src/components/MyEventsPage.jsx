@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 
 const MyEventsPage = ({ userEvents = [] }) => {
@@ -15,7 +15,9 @@ const MyEventsPage = ({ userEvents = [] }) => {
   const today = dayjs();
 
   const upcomingEvents = allEvents.filter((e) => dayjs(e.date).isAfter(today, 'day'));
-  const completedEvents = allEvents.filter((e) => dayjs(e.date).isSame(today, 'day') || dayjs(e.date).isBefore(today, 'day'));
+  const completedEvents = allEvents.filter((e) =>
+    dayjs(e.date).isSame(today, 'day') || dayjs(e.date).isBefore(today, 'day')
+  );
 
   const renderTable = (list, title) => (
     <div className="mb-8">

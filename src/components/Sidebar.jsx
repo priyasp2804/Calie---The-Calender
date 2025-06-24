@@ -1,29 +1,24 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Sidebar = ({ 
-    isOpen, 
-    onClose, 
-    calendarView, 
-    onChangeView, 
-    currentTheme, 
-    onChangeTheme,
-    pinnedEvents = [],
+const Sidebar = ({
+  onClose,
+  calendarView,
+  onChangeView,
+  currentTheme,
+  onChangeTheme,
+  pinnedEvents = [],
 }) => {
   const navigate = useNavigate();
 
   return (
     <div className="fixed top-0 left-0 h-full bg-pink-100 shadow-xl w-full max-w-[16rem] z-60 transition-all duration-300">
-      {/* ❌ Close Button */}
       <div className="flex justify-end p-4">
         <button onClick={onClose} className="text-lg text-purple-700 hover:text-purple-900">❌</button>
       </div>
 
-      {/* 📚 Sidebar Content */}
       <div className="flex flex-col gap-4 p-6 text-purple-800 h-[calc(100vh-64px)] overflow-y-auto">
         <h2 className="text-xl font-bold mb-2">🧭 Menu</h2>
 
-        {/* 📅 Calendar View */}
         <div>
           <p className="text-sm font-semibold mb-1">📅 Calendar View</p>
           <div className="flex gap-2 mt-1">
@@ -43,7 +38,6 @@ const Sidebar = ({
           </div>
         </div>
 
-        {/* 🎨 Themes */}
         <div>
           <p className="text-sm font-semibold mb-1 mt-4">🎨 Themes</p>
           <div className="flex flex-wrap gap-2 mt-1">
@@ -62,7 +56,7 @@ const Sidebar = ({
             ))}
           </div>
         </div>
-{/* 📝 My Events */}
+
         <button
           onClick={() => {
             navigate('/myevents');
@@ -73,7 +67,6 @@ const Sidebar = ({
           📝 My Events
         </button>
 
-        {/* ➕ Add Event */}
         <button
           onClick={() => {
             navigate('/add-event');
@@ -91,13 +84,14 @@ const Sidebar = ({
           ) : (
             <ul className="text-sm pl-4 list-disc space-y-1">
               {pinnedEvents.map((event, idx) => (
-                <li key={idx} title={`📅 ${event.date} @ ${event.time}`}>{event.title}</li>
+                <li key={idx} title={`📅 ${event.date} @ ${event.time}`}>
+                  {event.title}
+                </li>
               ))}
             </ul>
           )}
         </div>
 
-        {/* 💡 Tip Section */}
         <div className="mt-6 bg-white p-3 rounded shadow">
           <p className="text-sm italic">💡 Tip of the Day:</p>
           <p className="text-xs mt-1">“Plan your day. Don't let it plan you.”</p>
