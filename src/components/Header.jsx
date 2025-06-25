@@ -15,19 +15,37 @@ const Header = ({
   const [searchTerm, setSearchTerm] = useState(searchQuery || '');
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showHelp, setShowHelp] = useState(true);
+  const [currentTime, setCurrentTime] = useState(new Date());
 
-  const handleSearchInput = (value) => {
-    setSearchTerm(value);
-    onSearch(value); 
-  };
+  useEffect(() => {
+    const interval = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     setSearchTerm(searchQuery || '');
   }, [searchQuery]);
 
+  const formattedTime = currentTime.toLocaleTimeString('en-IN', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  }).toUpperCase();
+
+  const formattedDate = currentTime.toLocaleDateString('en-IN', {
+    weekday: 'short',
+    day: '2-digit',
+    month: 'short',
+  });
+
+  const handleSearchInput = (value) => {
+    setSearchTerm(value);
+    onSearch(value);
+  };
+
   const exportAsPDF = () => window.print();
 
-const SearchInput = () => (
+  const SearchInput = () => (
     <div className="relative">
       <input
         type="text"
@@ -56,8 +74,15 @@ const SearchInput = () => (
           isSidebarOpen ? 'pl-66' : ''
         }`}
       >
-        <div className="flex items-center gap-3 cursor-pointer" onClick={onLogoClick}>
+        <div
+          className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-4 cursor-pointer"
+          onClick={onLogoClick}
+        >
           <img src={logo} alt="Calie Logo" className="h-15 w-40 transition-transform hover:scale-105" />
+          <div className="text-sm sm:text-base text-purple-700 font-semibold leading-tight">
+            <div>{formattedDate}</div>
+            <div>{formattedTime}</div>
+          </div>
         </div>
 
         <div className="hidden sm:flex items-center gap-4">
@@ -149,27 +174,26 @@ const SearchInput = () => (
             </button>
           </div>
         )}
-
       </header>
 
       {showHelp && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
           <div className="bg-white rounded-lg p-6 shadow-xl max-w-md w-full text-left max-h-[80vh] overflow-y-auto">
             <h2 className="text-xl font-bold mb-4 text-purple-600">📘 How to Use Calie</h2>
-              <ul className="text-sm list-disc ml-5 space-y-2 text-gray-700">
-                <li>Click the <strong>Calie</strong> logo to return to the home page.</li>
-                <li>Use the <strong>Today</strong> button to instantly jump to today's date.</li>
-                <li>Click the ♡ icon on any date to mark it as a <strong>favourite💗</strong>.</li>
-                <li>Click 💙 in the header to view all your <strong>favourite dates</strong>.</li>
-                <li>Switch between <strong>Month, Week, and Day</strong> views from the sidebar.</li>
-                <li>Click on a date cell to <strong>expand it</strong> and view all events for that day.</li>
-                <li><strong>Edit Event:</strong> Click any event to edit its details like title, time, or type.</li>
-                <li><strong>Pin an Event:</strong> Drag any event to pin it. 📌 icon appears on that date.</li>
-                <li><strong>Unpin:</strong> Click the 📌 icon on the date to remove all pinned events for that day.</li>
-                <li><strong>Search 🔍</strong> by typing a title or date in the search bar to locate events quickly.</li>
-                <li>Click the <strong>Export 📤</strong> button to download your calendar view.</li>
-                <li>Conflicting events (same time on same day) are shown in <span className="text-yellow-600 font-semibold">yellow</span> for quick identification.</li>
-              </ul>
+            <ul className="text-sm list-disc ml-5 space-y-2 text-gray-700">
+              <li>Click the <strong>Calie</strong> logo to return to the home page.</li>
+              <li>Use the <strong>Today</strong> button to instantly jump to today's date.</li>
+              <li>Click the ♡ icon on any date to mark it as a <strong>favourite💗</strong>.</li>
+              <li>Click 💙 in the header to view all your <strong>favourite dates</strong>.</li>
+              <li>Switch between <strong>Month, Week, and Day</strong> views from the sidebar.</li>
+              <li>Click on a date cell to <strong>expand it</strong> and view all events for that day.</li>
+              <li><strong>Edit Event:</strong> Click any event to edit its details like title, time, or type.</li>
+              <li><strong>Pin an Event:</strong> Drag any event to pin it. 📌 icon appears on that date.</li>
+              <li><strong>Unpin:</strong> Click the 📌 icon on the date to remove all pinned events for that day.</li>
+              <li><strong>Search 🔍</strong> by typing a title or date in the search bar to locate events quickly.</li>
+              <li>Click the <strong>Export 📤</strong> button to download your calendar view.</li>
+              <li>Conflicting events (same time on same day) are shown in <span className="text-yellow-600 font-semibold">yellow</span> for quick identification.</li>
+            </ul>
             <p className="text-center text-2xl mt-4 font-semibold">
               Calie — your calendar for an Aesthetic, Light, Intuitive Experience ✨💫
             </p>
