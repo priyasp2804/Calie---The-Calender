@@ -49,4 +49,3 @@ Calie is built with the vision of providing a 'lightweight, user-friendly, and a
 7. Switch View — Toggle between Month, Week, and Day views.
 8. Export — Use 📤 to save/print the current calendar.
 
-

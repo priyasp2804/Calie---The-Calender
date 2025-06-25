@@ -32,8 +32,16 @@ function App() {
   }, []);
 
   const handleTodayClick = () => {
-    setShouldScrollToToday(true);
-    setGoToTodaySignal((prev) => prev + 1);
+    if (window.location.pathname !== '/') {
+      navigate('/'); // Navigate to calendar if not already there
+      setTimeout(() => {
+        setShouldScrollToToday(true);
+        setGoToTodaySignal((prev) => prev + 1);
+      }, 100); // Wait for navigation to complete
+    } else {
+      setShouldScrollToToday(true);
+      setGoToTodaySignal((prev) => prev + 1);
+    }
   };
 
   const handleLogoClick = () => {
@@ -132,7 +140,7 @@ function App() {
           />
         </div>
       )}
-      
+
       <div className="flex-1 flex flex-col relative">
         {!isSidebarOpen && (
           <button
