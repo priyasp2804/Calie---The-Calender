@@ -17,15 +17,17 @@ Calie is built with the vision of providing a 'lightweight, user-friendly, and a
 
 🚀 Features
 
-- 📆 Month, Week, Day Views
-- 💗 Mark Favourite Dates
-- 📌 Pin & Unpin Events
-- 🔍 Search by Title or Date
-- ➕ Add & View Custom Events
+- 📆 Month, Week, and Day Views
+- 💗 Mark & View Favourite Dates
+- 📌 Pin & Unpin Individual Events
+- ✏️ Edit & Delete Events on Click
+- 🔍 Search Events by Title or Date
+- ➕ Add Custom Events via Sidebar
 - 📤 Export Calendar as PDF
-- 🎨 Switchable Pastel Themes
-- 📘 How to Use Guide
+- 🎨 Pastel Theme with Light UI
+- 📘 Built-in Usage Guide
 - ⚠️ Conflict Detection for Overlapping Events
+- ⏱️ Live Display of Current Date & Time
 
 ---
 
@@ -43,12 +45,19 @@ Calie is built with the vision of providing a 'lightweight, user-friendly, and a
 
 🧾 How to Use Calie
 
-1. Home Page — View the calendar with dynamic layout.
+1. Home Page — View your calendar with an interactive layout.
 2. Today Button — Instantly jump to today’s date.
-3. Add Event — Use the sidebar ➕ to add a new event.
-4. Favourite Dates — Click 💗 on any date, view all via 💙.
-5. Search Events — Find quickly by typing titles or dates.
-6. Pin Events — Drag events into the sidebar for easy access.
-7. Switch View — Toggle between Month, Week, and Day views.
-8. Export — Use 📤 to save/print the current calendar.
+3. Current Date & Time — See today's date and time next to the Calie logo.
+4. Add Event — Use the ➕ sidebar button to create a new event.
+5. Edit/Delete Event — Click any event to edit its details or remove it.
+6. Expand Date — Click a date cell to view all events for that day.
+7. Favourite Dates — Click 💗 to mark dates as favourites. View all using 💙 in the header.
+8. Pin Events — Drag an event to pin it. 📌 icon appears on the date.
+9. Unpin Events — Click the 📌 icon to remove pinned events from that date.
+10. Search Events — Use 🔍 to find events by title or date.
+11. Switch View — Toggle between Month, Week, and Day views from the sidebar.
+12. Conflict Alerts — Overlapping events (same time on the same day) appear in ⚠️ yellow.
+13. Export — Use 📤 to save or print your calendar as a PDF.
+14. Mobile Menu — Tap ☰ to access all actions on smaller screens.
+15. How to Use — Click 📘 anytime for this guide.
 
