@@ -1,3 +1,6 @@
+
+🔗 https://calie-the-calender.vercel.app
+
 📅 Calie — Aesthetic & Intuitive Personal Calendar ✨
 
 Welcome to "Calie", a beautifully designed calendar web app built to help users "organize, remember, and celebrate important moments" — all in one place.  
