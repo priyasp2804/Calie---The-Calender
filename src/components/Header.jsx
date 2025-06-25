@@ -106,21 +106,50 @@ const SearchInput = () => (
 
         {showMobileMenu && (
           <div className="absolute top-20 right-4 bg-white shadow-lg border rounded p-4 z-50 w-64 flex flex-col gap-3 sm:hidden">
-            <button onClick={onTodayClick} className="w-full text-left px-3 py-2 bg-purple-100 text-purple-700 text-sm rounded hover:bg-purple-200 transition">
+            <button
+              onClick={() => {
+                onTodayClick();
+                setShowMobileMenu(false);
+              }}
+              className="w-full text-left px-3 py-2 bg-purple-100 text-purple-700 text-sm rounded hover:bg-purple-200 transition"
+            >
               Today
             </button>
+
             <SearchInput />
-            <button onClick={onShowFavourites} className="w-full text-left px-3 py-2 text-lg rounded hover:bg-purple-100 transition">
+
+            <button
+              onClick={() => {
+                onShowFavourites();
+                setShowMobileMenu(false);
+              }}
+              className="w-full text-left text-lg px-3 py-2 rounded hover:bg-purple-100 transition"
+            >
               💙 Favourite Dates
             </button>
-            <button onClick={exportAsPDF} className="w-full text-left px-3 py-2 text-lg rounded hover:bg-purple-100 transition">
+
+            <button
+              onClick={() => {
+                exportAsPDF();
+                setShowMobileMenu(false);
+              }}
+              className="w-full text-left text-lg px-3 py-2 rounded hover:bg-purple-100 transition"
+            >
               📤 Export
             </button>
-            <button onClick={() => setShowHelp(true)} className="w-full text-left px-3 py-2 text-lg rounded hover:bg-purple-100 transition">
+
+            <button
+              onClick={() => {
+                setShowHelp(true);
+                setShowMobileMenu(false);
+              }}
+              className="w-full text-left text-lg px-3 py-1 rounded hover:bg-purple-100 transition"
+            >
               📘 How to Use
             </button>
           </div>
         )}
+
       </header>
 
       {showHelp && (

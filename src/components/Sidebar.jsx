@@ -25,7 +25,7 @@ const Sidebar = ({
             {['month', 'week', 'day'].map((mode) => (
               <button
                 key={mode}
-                onClick={() => onChangeView(mode)z}
+                onClick={() => onChangeView(mode)}
                 className={`px-3 py-1 text-sm rounded-full transition ${
                   calendarView === mode
                     ? 'bg-purple-500 text-white'
