@@ -19,6 +19,13 @@ const MyEventsPage = ({ userEvents = [] }) => {
     dayjs(e.date).isSame(today, 'day') || dayjs(e.date).isBefore(today, 'day')
   );
 
+  const getEventType = (event) => {
+    if (event.type === 'yearly') return '📆 Yearly';
+    if (event.type === 'monthly') return '🗓️ Monthly';
+    if (event.type === 'weekly') return '📅 Weekly';
+    return '🔖 One-time';
+  };
+
   const renderTable = (list, title) => (
     <div className="mb-8">
       <h2 className="text-xl font-bold mb-2 text-purple-700">{title}</h2>
@@ -33,6 +40,7 @@ const MyEventsPage = ({ userEvents = [] }) => {
                 <th className="px-4 py-2 text-left">📝 Title</th>
                 <th className="px-4 py-2 text-left">⏰ Time</th>
                 <th className="px-4 py-2 text-left">⌛ Duration</th>
+                <th className="px-4 py-2 text-left">📂 Type</th>
                 <th className="px-4 py-2 text-left">✅ Status</th>
               </tr>
             </thead>
@@ -43,6 +51,7 @@ const MyEventsPage = ({ userEvents = [] }) => {
                   <td className="px-4 py-2">{event.title}</td>
                   <td className="px-4 py-2">{event.time}</td>
                   <td className="px-4 py-2">{event.duration || '-'}</td>
+                  <td className="px-4 py-2">{getEventType(event)}</td>
                   <td className="px-4 py-2">
                     {dayjs(event.date).isAfter(today, 'day') ? 'Upcoming' : 'Completed'}
                   </td>

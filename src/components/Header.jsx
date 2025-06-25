@@ -154,21 +154,22 @@ const SearchInput = () => (
 
       {showHelp && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
-          <div className="bg-white rounded-lg p-6 shadow-xl max-w-md w-full text-left">
+          <div className="bg-white rounded-lg p-6 shadow-xl max-w-md w-full text-left max-h-[80vh] overflow-y-auto">
             <h2 className="text-xl font-bold mb-4 text-purple-600">📘 How to Use Calie</h2>
-            <ul className="text-sm list-disc ml-5 space-y-2 text-gray-700">
-              <li>Click <strong>Calie</strong> logo to navigate to the home page.</li>
-              <li>Use the <strong>Today</strong> button to jump to today’s date.</li>
-              <li>Click any 💗 icon to mark dates as favourites.</li>
-              <li>Click 💙 to see all your favourite dates.</li>
-              <li>Switch between Month, Week, and Day views.</li>
-              <li>Use the sidebar to <strong>Add Events</strong>.</li>
-              <li>Check <strong>My Events</strong> to track upcoming/completed ones.</li>
-              <li>Export your calendar using 📤.</li>
-              <li><strong>Pin an Event:</strong> Drag it into the sidebar for 📌 pinned events.</li>
-              <li><strong>Unpin:</strong> Click 📌 on a date to remove pinned events.</li>
-              <li>🔍 <strong>Search:</strong> Find events by title or date.</li>
-            </ul>
+              <ul className="text-sm list-disc ml-5 space-y-2 text-gray-700">
+                <li>Click the <strong>Calie</strong> logo to return to the home page.</li>
+                <li>Use the <strong>Today</strong> button to instantly jump to today's date.</li>
+                <li>Click the 💗 icon on any date to mark it as a <strong>favourite</strong>.</li>
+                <li>Click 💙 in the header to view all your <strong>favourite dates</strong>.</li>
+                <li>Switch between <strong>Month, Week, and Day</strong> views from the sidebar.</li>
+                <li>Click on a date cell to <strong>expand it</strong> and view all events for that day.</li>
+                <li><strong>Edit Event:</strong> Click any event to edit its details like title, time, or type.</li>
+                <li><strong>Pin an Event:</strong> Drag any event to pin it. 📌 icon appears on that date.</li>
+                <li><strong>Unpin:</strong> Click the 📌 icon on the date to remove all pinned events for that day.</li>
+                <li><strong>Search 🔍</strong> by typing a title or date in the search bar to locate events quickly.</li>
+                <li>Click the <strong>Export 📤</strong> button to download your calendar view.</li>
+                <li>Conflicting events (same time on same day) are shown in <span className="text-yellow-600 font-semibold">yellow</span> for quick identification.</li>
+              </ul>
             <p className="text-center text-2xl mt-4 font-semibold">
               Calie — your calendar for an Aesthetic, Light, Intuitive Experience ✨💫
             </p>
