@@ -148,7 +148,7 @@ const Calendar = ({
   }
 
   return (
-    <section className="max-w-5xl mx-auto p-6 bg-white/60 rounded-2xl shadow-xl backdrop-blur-sm border border-pink-100 overflow-auto max-h-[80vh]">
+    <section className="max-w-5xl mx-auto mt-[1rem] sm:mt-0 p-6 bg-white/60 rounded-2xl shadow-xl backdrop-blur-sm border border-pink-100 overflow-auto max-h-[80vh]">
       <div className="flex items-center justify-between mb-6">
         <button onClick={goToPrevious} className="text-pink-500 hover:text-pink-600 text-xl font-bold">◀</button>
 

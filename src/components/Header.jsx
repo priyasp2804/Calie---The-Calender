@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import logo from '../assets/logo.png';
 
 const Header = ({
@@ -11,6 +11,7 @@ const Header = ({
   searchQuery
 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [searchTerm, setSearchTerm] = useState(searchQuery || '');
   const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -25,6 +26,10 @@ const Header = ({
   useEffect(() => {
     setSearchTerm(searchQuery || '');
   }, [searchQuery]);
+
+  useEffect(() => {
+    setShowMobileMenu(false);
+  }, [location.pathname]);
 
   const formattedTime = currentTime.toLocaleTimeString('en-IN', {
     hour: '2-digit',

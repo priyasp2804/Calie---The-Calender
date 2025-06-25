@@ -181,7 +181,7 @@ function App() {
           </div>
         )}
 
-        <main className="pt-24 p-6 text-center">
+        <main className="pt-[9rem] sm:pt-24 p-6 text-center">
           <Routes>
             <Route
               path="/"

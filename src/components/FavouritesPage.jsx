@@ -1,6 +1,6 @@
 const FavouritesPage = ({ favouriteDates, onRemoveFavourite }) => {
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white rounded-xl shadow-md">
+    <div className="max-w-xl mx-auto mt-[3rem] sm:mt-0 p-6 bg-white rounded-xl shadow-md">
       <h2 className="text-2xl font-bold text-purple-700 mb-4">💙 Favourite Dates</h2>
 
       {favouriteDates.length === 0 ? (
