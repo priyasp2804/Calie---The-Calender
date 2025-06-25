@@ -7,13 +7,12 @@ const Header = ({
   onShowFavourites,
   onLogoClick,
   isSidebarOpen,
-  onSearch,
-  searchQuery
+  onSearch
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [searchTerm, setSearchTerm] = useState(searchQuery || '');
+  const [searchTerm, setSearchTerm] = useState('');
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showHelp, setShowHelp] = useState(true);
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -22,10 +21,6 @@ const Header = ({
     const interval = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(interval);
   }, []);
-
-  useEffect(() => {
-    setSearchTerm(searchQuery || '');
-  }, [searchQuery]);
 
   useEffect(() => {
     setShowMobileMenu(false);
@@ -45,7 +40,7 @@ const Header = ({
 
   const handleSearchInput = (value) => {
     setSearchTerm(value);
-    onSearch(value);
+    onSearch(value); 
   };
 
   const exportAsPDF = () => window.print();

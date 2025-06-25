@@ -19,7 +19,6 @@ function App() {
   const [userEvents, setUserEvents] = useState([]);
   const [focusDate, setFocusDate] = useState(null);
   const [pinnedEvents, setPinnedEvents] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
   const navigate = useNavigate();
@@ -89,7 +88,6 @@ function App() {
   };
 
   const handleSearch = (query) => {
-    setSearchQuery(query);
     if (!query) {
       setSearchResults([]);
       return;
@@ -103,6 +101,7 @@ function App() {
     );
     setSearchResults(results);
   };
+
 
   const handleSearchResultClick = (event) => {
     setFocusDate(event.date);
@@ -158,7 +157,6 @@ function App() {
           onLogoClick={handleLogoClick}
           isSidebarOpen={isSidebarOpen}
           onSearch={handleSearch}
-          searchQuery={searchQuery}
         />
 
         {searchResults.length > 0 && (
