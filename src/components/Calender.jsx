@@ -101,11 +101,15 @@ const Calendar = ({
   };
 
   const goToPrevious = () => {
-    setCurrentDate((prev) => prev.subtract(1, calendarView === 'month' ? 'month' : 'day'));
+    const unit = calendarView === 'month' ? 'month' : calendarView === 'week' ? 'day' : 'day';
+    const amount = calendarView === 'week' ? 7 : 1;
+    setCurrentDate((prev) => prev.subtract(amount, unit));
   };
 
   const goToNext = () => {
-    setCurrentDate((prev) => prev.add(1, calendarView === 'month' ? 'month' : 'day'));
+    const unit = calendarView === 'month' ? 'month' : calendarView === 'week' ? 'day' : 'day';
+    const amount = calendarView === 'week' ? 7 : 1;
+    setCurrentDate((prev) => prev.add(amount, unit));
   };
 
   const handleEventClick = (event) => {
