@@ -65,7 +65,7 @@ const MyEventsPage = ({ userEvents = [] }) => {
   );
 
   return (
-    <div className="max-w-4xl mx-auto mt-[3rem] sm:mt-0 p-6 bg-white rounded-xl shadow-lg">
+    <div className="max-w-4xl mx-auto mt-[1rem] sm:mt-0 p-6 bg-white rounded-xl shadow-lg">
       <h1 className="text-2xl font-bold text-center mb-6 text-purple-600">📋 My Events</h1>
       {renderTable(upcomingEvents, '🟢 Upcoming Events')}
       {renderTable(completedEvents, '🔵 Completed Events')}
