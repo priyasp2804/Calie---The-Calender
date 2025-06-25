@@ -145,7 +145,6 @@ const Calendar = ({
 
   return (
     <section className="max-w-5xl mx-auto p-6 bg-white/60 rounded-2xl shadow-xl backdrop-blur-sm border border-pink-100 overflow-auto max-h-[80vh]">
-      {/* Navigation */}
       <div className="flex items-center justify-between mb-6">
         <button onClick={goToPrevious} className="text-pink-500 hover:text-pink-600 text-xl font-bold">◀</button>
 
@@ -179,7 +178,6 @@ const Calendar = ({
         <button onClick={goToNext} className="text-pink-500 hover:text-pink-600 text-xl font-bold">▶</button>
       </div>
 
-      {/* Days */}
       {calendarView !== 'day' && (
         <div className="grid grid-cols-7 gap-2 mb-2 text-center text-sm font-semibold text-blue-500">
           {daysOfWeek.map((d, i) => (
@@ -188,7 +186,6 @@ const Calendar = ({
         </div>
       )}
 
-      {/* Grid */}
       <div className="grid grid-cols-7 gap-2 auto-rows-fr">
         {dates.map((date, idx) => {
           if (!date) return <div key={idx} className="bg-transparent" />;
@@ -208,7 +205,6 @@ const Calendar = ({
                   ${isToday ? 'border-2 border-pink-400' : ''}`}
                 style={{ gridColumn: isExpanded ? '1 / -1' : undefined }}
               >
-                {/* Date Header */}
                 <span className="font-semibold mb-1 flex items-center justify-between w-full">
                   {date.date()}
                   <div className="ml-auto flex gap-1 items-center" onClick={(e) => e.stopPropagation()}>
@@ -233,8 +229,6 @@ const Calendar = ({
                     )}
                   </div>
                 </span>
-
-                {/* Events */}
                 <div className="flex flex-col gap-1 w-full max-h-[150px] overflow-y-auto">
                   {Object.entries(grouped).flatMap(([time, evts], i) =>
                     evts.map((event, j) => {
@@ -280,8 +274,6 @@ const Calendar = ({
           );
         })}
       </div>
-
-      {/* Edit Modal */}
       {editingEvent && (
         <form
           onSubmit={handleEditSubmit}

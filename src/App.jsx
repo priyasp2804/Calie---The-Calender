@@ -33,11 +33,11 @@ function App() {
 
   const handleTodayClick = () => {
     if (window.location.pathname !== '/') {
-      navigate('/'); // Navigate to calendar if not already there
+      navigate('/');
       setTimeout(() => {
         setShouldScrollToToday(true);
         setGoToTodaySignal((prev) => prev + 1);
-      }, 100); // Wait for navigation to complete
+      }, 100); 
     } else {
       setShouldScrollToToday(true);
       setGoToTodaySignal((prev) => prev + 1);

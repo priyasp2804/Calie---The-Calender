@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
 
@@ -18,7 +18,7 @@ const Header = ({
 
   const handleSearchInput = (value) => {
     setSearchTerm(value);
-    onSearch(value); // 🔁 debounced in App.js only!
+    onSearch(value); 
   };
 
   useEffect(() => {
@@ -159,7 +159,7 @@ const SearchInput = () => (
               <ul className="text-sm list-disc ml-5 space-y-2 text-gray-700">
                 <li>Click the <strong>Calie</strong> logo to return to the home page.</li>
                 <li>Use the <strong>Today</strong> button to instantly jump to today's date.</li>
-                <li>Click the 💗 icon on any date to mark it as a <strong>favourite</strong>.</li>
+                <li>Click the ♡ icon on any date to mark it as a <strong>favourite💗</strong>.</li>
                 <li>Click 💙 in the header to view all your <strong>favourite dates</strong>.</li>
                 <li>Switch between <strong>Month, Week, and Day</strong> views from the sidebar.</li>
                 <li>Click on a date cell to <strong>expand it</strong> and view all events for that day.</li>

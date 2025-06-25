@@ -9,7 +9,7 @@ const AddEventPage = ({ onAddEvent }) => {
     date: '',
     time: '',
     duration: '',
-    type: 'one-time' // default to one-time
+    type: 'Select Event Type' 
   });
 
   const handleChange = (e) => {
@@ -85,7 +85,7 @@ const AddEventPage = ({ onAddEvent }) => {
             className="p-2 border rounded w-full"
             required
           >
-            <option value="" disabled>Select Event Type</option>
+            <option value="Select Event Type" disabled>Select Event Type</option>
             <option value="yearly">Yearly</option>
             <option value="monthly">Monthly</option>
             <option value="weekly">Weekly</option>
