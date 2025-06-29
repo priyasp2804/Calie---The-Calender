@@ -11,7 +11,7 @@ Simple yet powerful. Functional yet delightful. 🌸
 🎯 Motto
 
 > “Don’t just manage your time — design your days.”  
-Calie is built with the vision of providing a 'lightweight, user-friendly, and aesthetic experience' that helps you track events, log memories, and stay productive effortlessly.
+Calie is built with the vision of providing a 'lightweight, user-friendly, and aesthetic experience' that helps you track events and stay productive effortlessly.
 
 ---
 
