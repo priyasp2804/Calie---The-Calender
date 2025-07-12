@@ -136,10 +136,27 @@ const Calendar = ({
     const startOfMonth = currentDate.startOf('month');
     const startDay = startOfMonth.day();
     const daysInMonth = currentDate.daysInMonth();
-    dates = [
-      ...Array(startDay).fill(null),
-      ...Array.from({ length: daysInMonth }, (_, d) => dayjs(currentDate).date(d + 1)),
-    ];
+
+    const prevMonth = currentDate.subtract(1,'month');
+    const daysInPrevMonth = prevMonth.daysInMonth();
+    
+    const nextMonth = currentDate.add(1, 'month');
+    const daysInNextMonth = nextMonth.daysInMonth();
+
+    const prevMonthDates = Array.from({length : startDay}, (_, i) => 
+       dayjs(prevMonth).date(daysInPrevMonth - startDay + i + 1)
+    );
+
+    const currentMonthDates = Array.from({length : daysInMonth}, (_, d) => 
+      dayjs(currentDate).date(d+1)
+  );
+
+    const totalSoFar = prevMonthDates.length + currentMonthDates.length;
+    const remaining = 7 - (totalSoFar % 7);
+    const nextMonthDates = Array.from({length: remaining}, (_, i) =>
+      dayjs(currentDate).date(i+1)
+  );
+  dates = [...prevMonthDates, ...currentMonthDates, ...nextMonthDates];
   } else if (calendarView === 'week') {
     const startOfWeek = currentDate.startOf('week');
     dates = Array.from({ length: 7 }, (_, i) => startOfWeek.add(i, 'day'));
