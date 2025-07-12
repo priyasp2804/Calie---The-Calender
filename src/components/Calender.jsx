@@ -152,7 +152,7 @@ const Calendar = ({
   );
 
     const totalSoFar = prevMonthDates.length + currentMonthDates.length;
-    const remaining = 7 - (totalSoFar % 7);
+    const remaining = totalSoFar % 7 === 0 ? 0 : 7 - (totalSoFar % 7);
     const nextMonthDates = Array.from({length: remaining}, (_, i) =>
       dayjs(currentDate).date(i+1)
   );
