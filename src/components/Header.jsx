@@ -1,6 +1,33 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, forwardRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import logo from '../assets/logo.png';
+
+const SearchInput = forwardRef(({ searchTerm, onSearch, onClear }, ref) => {
+  return (
+    <div className="relative">
+      <input
+        ref={ref}
+        type="text"
+        placeholder="Search events..."
+        value={searchTerm}
+        onChange={(e) => onSearch(e.target.value)}
+        className="pl-3 pr-14 py-1 text-sm border rounded focus:outline-none focus:ring focus:border-purple-300 w-full"
+      />
+      {searchTerm && (
+        <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center gap-1">
+          <button 
+            onClick={onClear} 
+            className="text-gray-400 hover:text-red-500 text-xs" 
+            title="Clear"
+            type="button"
+          >
+            ❌
+          </button>
+        </div>
+      )}
+    </div>
+  );
+});
 
 const Header = ({
   onTodayClick,
@@ -8,24 +35,21 @@ const Header = ({
   onLogoClick,
   isSidebarOpen,
   onSearch,
-  searchQuery
+  searchTerm
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const searchInputRef = useRef(null);
 
-  const [searchTerm, setSearchTerm] = useState(searchQuery || '');
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showHelp, setShowHelp] = useState(true);
   const [currentTime, setCurrentTime] = useState(new Date());
+  
 
   useEffect(() => {
     const interval = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(interval);
   }, []);
-
-  useEffect(() => {
-    setSearchTerm(searchQuery || '');
-  }, [searchQuery]);
 
   useEffect(() => {
     setShowMobileMenu(false);
@@ -43,34 +67,14 @@ const Header = ({
     month: 'short',
   });
 
-  const handleSearchInput = (value) => {
-    setSearchTerm(value);
-    onSearch(value);
+  const handleClearSearch = () => {
+    onSearch('');
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
   };
 
   const exportAsPDF = () => window.print();
-
-  const SearchInput = () => (
-    <div className="relative">
-      <input
-        type="text"
-        placeholder="Search events..."
-        value={searchTerm}
-        onChange={(e) => handleSearchInput(e.target.value)}
-        className="pl-3 pr-14 py-1 text-sm border rounded focus:outline-none focus:ring focus:border-purple-300 w-full"
-      />
-      {searchTerm && (
-        <div className="absolute right-2 top-1.5 flex items-center gap-1">
-          <button onClick={() => handleSearchInput('')} className="text-gray-400 hover:text-red-500 text-xs" title="Clear">
-            ❌
-          </button>
-          <button className="text-gray-500 hover:text-purple-600 text-sm" title="Search">
-            🔍
-          </button>
-        </div>
-      )}
-    </div>
-  );
 
   return (
     <>
@@ -98,7 +102,12 @@ const Header = ({
             Today
           </button>
 
-          <SearchInput />
+          <SearchInput 
+            ref={searchInputRef}
+            searchTerm={searchTerm}
+            onSearch={onSearch}
+            onClear={handleClearSearch}
+          />
 
           <button
             onClick={() => navigate('/favourites')}
@@ -146,7 +155,12 @@ const Header = ({
               Today
             </button>
 
-            <SearchInput />
+          <SearchInput 
+            ref={searchInputRef}
+            searchTerm={searchTerm}
+            onSearch={onSearch}
+            onClear={handleClearSearch}
+          />
 
             <button
               onClick={() => {
