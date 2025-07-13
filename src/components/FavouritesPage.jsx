@@ -1,4 +1,4 @@
-const FavouritesPage = ({ favouriteDates, onRemoveFavourite }) => {
+ const FavouritesPage = ({ favouriteDates, onRemoveFavourite }) => {
   return (
     <div className="max-w-xl mx-auto mt-[1rem] sm:mt-0 p-6 bg-white rounded-xl shadow-md">
       <h2 className="text-2xl font-bold text-purple-700 mb-4">💙 Favourite Dates</h2>
@@ -15,7 +15,7 @@ const FavouritesPage = ({ favouriteDates, onRemoveFavourite }) => {
               <span className="text-sm sm:text-base">{date}</span>
               <button
                 onClick={() => onRemoveFavourite(date)}
-                className="text-red-500 hover:text-red-700 text-sm"
+                className="text-red-500 hover:bg-red-100 text-sm p-1.5"
                 title="Remove from Favourites"
               >
                 💔 Remove

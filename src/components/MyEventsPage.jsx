@@ -1,15 +1,9 @@
-import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 
-const MyEventsPage = ({ userEvents = [] }) => {
-  const [jsonEvents, setJsonEvents] = useState([]);
-
-  useEffect(() => {
-    fetch('/events.json')
-      .then((res) => res.json())
-      .then((data) => setJsonEvents(data))
-      .catch((err) => console.error('Failed to load events:', err));
-  }, []);
+const MyEventsPage = ({ 
+  userEvents = [],
+  jsonEvents = []
+ }) => {
 
   const allEvents = [...jsonEvents, ...userEvents];
   const today = dayjs();
@@ -41,7 +35,6 @@ const MyEventsPage = ({ userEvents = [] }) => {
                 <th className="px-4 py-2 text-left">⏰ Time</th>
                 <th className="px-4 py-2 text-left">⌛ Duration</th>
                 <th className="px-4 py-2 text-left">📂 Type</th>
-                <th className="px-4 py-2 text-left">✅ Status</th>
               </tr>
             </thead>
             <tbody>
@@ -52,9 +45,6 @@ const MyEventsPage = ({ userEvents = [] }) => {
                   <td className="px-4 py-2">{event.time}</td>
                   <td className="px-4 py-2">{event.duration || '-'}</td>
                   <td className="px-4 py-2">{getEventType(event)}</td>
-                  <td className="px-4 py-2">
-                    {dayjs(event.date).isAfter(today, 'day') ? 'Upcoming' : 'Completed'}
-                  </td>
                 </tr>
               ))}
             </tbody>

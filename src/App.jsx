@@ -151,15 +151,12 @@ function App() {
       {isSidebarOpen && (
         <div className="w-64 shrink-0">
           <Sidebar
-            isOpen={isSidebarOpen}
             onClose={() => setIsSidebarOpen(false)}
             calendarView={calendarView}
             onChangeView={setCalendarView}
             onChangeTheme={setTheme}
             currentTheme={theme}
-            onAddEvent={handleAddEvent}
             pinnedEvents={pinnedEvents}
-            onUnpinEvent={handleUnpinEvent}
           />
         </div>
       )}
@@ -240,7 +237,7 @@ function App() {
                 />
               }
             />
-            <Route path="/myevents" element={<MyEventsPage userEvents={userEvents} />} />
+            <Route path="/myevents" element={<MyEventsPage userEvents={userEvents} jsonEvents={jsonEvents} />} />
             <Route path="/add-event" element={<AddEventPage onAddEvent={handleAddEvent} />} />
           </Routes>
         </main>
