@@ -262,7 +262,7 @@ const Calendar = ({
                           key={`${dateStr}-${i}-${j}`}
                           className={`px-1 py-0.5 rounded text-xs cursor-pointer truncate flex justify-between items-center
                             ${isConflict ? 'bg-yellow-100 text-yellow-600' : 'bg-pink-100 text-pink-700'}`}
-                          title={`${isConflict ? '⚠️ 2 Events at Same Time •' : ''}${event.title} at ${time}`}
+                          title={`${isConflict ? `⚠️ ${evts.length} Events at Same Time •` : ''}${event.title} at ${time}`}
                           draggable
                           onDragStart={() =>
                             isPinned ? onUnpinEvent?.(event) : onPinEvent?.(event)
