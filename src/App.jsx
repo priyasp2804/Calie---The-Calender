@@ -70,6 +70,29 @@ function App() {
     navigate('/');
   };
 
+  const handleDeleteEvent = (eventToDelete) => {
+    setUserEvents((prev) =>
+      prev.filter(
+        (e) =>
+          !(
+            e.title === eventToDelete.title &&
+            e.date === eventToDelete.date &&
+            e.time === eventToDelete.time
+          )
+      )
+    );
+    setJsonEvents((prev) =>
+      prev.filter(
+        (e) =>
+          !(
+            e.title === eventToDelete.title &&
+            e.date === eventToDelete.date &&
+            e.time === eventToDelete.time
+          )
+      )
+    );
+  };
+
   const handlePinEvent = (event) => {
     setPinnedEvents((prev) => {
       const exists = prev.some(
@@ -203,6 +226,7 @@ function App() {
                     pinnedEvents={pinnedEvents}
                     onPinEvent={handlePinEvent}
                     onUnpinEvent={handleUnpinEvent}
+                    onDeleteEvent={handleDeleteEvent}
                   />
                 </>
               }

@@ -21,13 +21,6 @@
     "type": "one-time"
   },
   {
-    "title": "NCC Documentation",
-    "date": "2025-05-22",
-    "time": "09:00",
-    "duration": "2h",
-    "type": "one-time"
-  },
-  {
     "title": "Aura Project Planning",
     "date": "2025-05-25",
     "time": "11:00",
@@ -65,7 +58,14 @@
   {
     "title": "Principal Meeting",
     "date": "2025-06-16",
-    "time": "19:00",
+    "time": "13:00",
+    "duration": "1h",
+    "type": "monthly"
+  },
+    {
+    "title": "Lecture on AI",
+    "date": "2025-06-16",
+    "time": "13:00",
     "duration": "1h",
     "type": "monthly"
   },
@@ -74,27 +74,6 @@
     "date": "2025-06-24",
     "time": "10:00",
     "duration": "1h",
-    "type": "monthly"
-  },
-  {
-    "title": "Project Meeting",
-    "date": "2025-06-24",
-    "time": "15:00",
-    "duration": "30m",
-    "type": "weekly"
-  },
-  {
-    "title": "Family Trip",
-    "date": "2025-06-25",
-    "time": "18:00",
-    "duration": "1.5h",
-    "type": "monthly"
-  },
-  {
-    "title": "Resume Submission Deadline",
-    "date": "2025-06-28",
-    "time": "17:00",
-    "duration": "30m",
     "type": "monthly"
   },
   {
@@ -122,13 +101,6 @@
     "title": "Hobbies Time",
     "date": "2025-07-10",
     "time": "14:00",
-    "duration": "2h",
-    "type": "weekly"
-  },
-  {
-    "title": "Weekend Chill",
-    "date": "2025-07-13",
-    "time": "16:00",
     "duration": "2h",
     "type": "weekly"
   },

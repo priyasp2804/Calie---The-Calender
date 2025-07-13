@@ -9,13 +9,14 @@ const Calendar = ({
   shouldScrollToToday,
   calendarView = 'month',
   userEvents = [],
+  jsonEvents = [],
   pinnedEvents = [],
   onPinEvent,
   onUnpinEvent,
+  onDeleteEvent,
   focusDate = null,
 }) => {
   const [currentDate, setCurrentDate] = useState(dayjs());
-  const [events, setEvents] = useState([]);
   const [expandedCell, setExpandedCell] = useState(null);
   const [editingEvent, setEditingEvent] = useState(null);
   const todayRef = useRef(null);
@@ -36,13 +37,6 @@ const Calendar = ({
   }, [goToTodaySignal]);
 
   useEffect(() => {
-    fetch('/events.json')
-      .then((res) => res.json())
-      .then(setEvents)
-      .catch((err) => console.error('Failed to load events:', err));
-  }, []);
-
-  useEffect(() => {
     if (!focusDate) return;
     const target = dayjs(focusDate);
     setCurrentDate(target);
@@ -57,7 +51,7 @@ const Calendar = ({
   }, [focusDate]);
 
   const getEventsForDate = (date) => {
-    const allEvents = [...events, ...userEvents];
+    const allEvents = [...jsonEvents, ...userEvents]; 
     const dateStr = date.format('YYYY-MM-DD');
 
     const uniqueEvents = allEvents.filter((event) => {
@@ -123,7 +117,7 @@ const Calendar = ({
   };
 
   const handleDelete = () => {
-    console.log('Delete Event:', editingEvent);
+    onDeleteEvent?.(editingEvent);
     setEditingEvent(null);
   };
 
@@ -143,19 +137,23 @@ const Calendar = ({
     const nextMonth = currentDate.add(1, 'month');
     const daysInNextMonth = nextMonth.daysInMonth();
 
-    const prevMonthDates = Array.from({length : startDay}, (_, i) => 
-       dayjs(prevMonth).date(daysInPrevMonth - startDay + i + 1)
-    );
+    const prevMonthDates = Array.from({length : startDay}, (_, i) => ({
+       date : dayjs(prevMonth).date(daysInPrevMonth - startDay + i + 1),
+       type : 'prev',
+    }));
 
-    const currentMonthDates = Array.from({length : daysInMonth}, (_, d) => 
-      dayjs(currentDate).date(d+1)
-  );
+    const currentMonthDates = Array.from({length : daysInMonth}, (_, d) => ({
+      date : dayjs(currentDate).date(d+1),
+      type : 'current',
+    }));
 
     const totalSoFar = prevMonthDates.length + currentMonthDates.length;
     const remaining = totalSoFar % 7 === 0 ? 0 : 7 - (totalSoFar % 7);
-    const nextMonthDates = Array.from({length: remaining}, (_, i) =>
-      dayjs(currentDate).date(i+1)
-  );
+
+    const nextMonthDates = Array.from({length: remaining}, (_, i) => ({
+      date : dayjs(currentDate).date(i+1),
+      type : 'next',
+    }));
   dates = [...prevMonthDates, ...currentMonthDates, ...nextMonthDates];
   } else if (calendarView === 'week') {
     const startOfWeek = currentDate.startOf('week');
@@ -208,7 +206,7 @@ const Calendar = ({
       )}
 
       <div className="grid grid-cols-7 gap-2 auto-rows-fr">
-        {dates.map((date, idx) => {
+        {dates.map(({date, type}, idx) => {
           if (!date) return <div key={idx} className="bg-transparent" />;
           const dateStr = date.format('YYYY-MM-DD');
           const grouped = groupEventsByTime(getEventsForDate(date));
@@ -223,7 +221,9 @@ const Calendar = ({
                 onClick={() => setExpandedCell(isExpanded ? null : dateStr)}
                 className={`cursor-pointer p-2 rounded-lg flex flex-col items-start text-sm bg-white shadow-sm hover:shadow-md transition-all
                   ${isExpanded ? 'col-span-7' : ''}
-                  ${isToday ? 'border-2 border-pink-400' : ''}`}
+                  ${isToday ? 'border-2 border-pink-400' : ''}
+                  ${type !== 'current' ? 'opacity-60 text-gray-400 bg-gray-100' : 'bg-white'}
+                `}
                 style={{ gridColumn: isExpanded ? '1 / -1' : undefined }}
               >
                 <span className="font-semibold mb-1 flex items-center justify-between w-full">
@@ -319,6 +319,7 @@ const Calendar = ({
             <option value="yearly">Yearly</option>
             <option value="monthly">Monthly</option>
             <option value="weekly">Weekly</option>
+            <option value="onetime">One-Time</option>
           </select>
 
           <div className="flex justify-between mt-4">
